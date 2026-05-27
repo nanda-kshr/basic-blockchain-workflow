@@ -51,6 +51,7 @@ class BlockChain:
             for i in blockchain_data:
                 block = Block.from_json(i)
                 chain.append(block)
+                b.is_chain_valid()
             self.index = chain[-1].index
             self.chain = chain
         except Exception as e:
