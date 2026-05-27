@@ -15,7 +15,16 @@ class BlockChain:
             b = Block(data.copy(), "0", self.index)
         self.chain.append(b)
         self.save_chain()
-
+    
+    def get_data(self, index=None):
+        if index is None: 
+            return None
+        try:
+            return self.chain[index].data
+        except Exception as e:
+            return {"error": str(e)}
+            
+    
     def is_block_valid(self, b: Block):
         if self.chain:
             if b.previous_hash != self.chain[-1].hash_value:
