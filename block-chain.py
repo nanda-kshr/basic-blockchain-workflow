@@ -17,13 +17,19 @@ class BlockChain:
 
     def is_block_valid(self, b: Block):
         if b.previous_hash != self.chain[-1].hash:
-            raise Exception("INVALID BLOCK")
+            raise Exception("INVALID CHAIN LINK")
+        if b.hash != b.calculate_hash():
+            raise Exception("INVALID BLOCK HASH")
+        
         print("Block is Validated Successfully")
         
     def is_chain_valid(self):
         for i in range(1, len(self.chain)):
             if self.chain[i].hash != self.chain[i].calculate_hash():
                 raise Exception("INVALID CHAIN")
+            if self.chain[i].previous_hash != self.chain[i-1].hash:
+                raise Exception("INVALID CHAIN LINK")
+        
         print("Chain is Validated Successfully")
             
 
