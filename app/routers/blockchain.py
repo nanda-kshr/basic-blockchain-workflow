@@ -1,12 +1,12 @@
-from fastapi import APIRouter
-from app.schemas.blockchain import DataCreate, DataOut
+from fastapi import APIRouter, Query
+from app.schemas.blockchain import DataCreate, DataOut, SearchOut
 from app.deps.blackchain_instance import blockchain
 
 router = APIRouter(prefix="/blockchain", tags=["blockchain"])
 
 
 @router.post("", response_model=DataOut)
-async def create_attendance(
+async def add_data(
     payload: DataCreate
 ) -> DataOut:
     try:
@@ -15,4 +15,14 @@ async def create_attendance(
     except Exception as e:
         return {"error": str(e)}
     return {"data": "success"}
+
+@router.get("", response_model=SearchOut)
+async def get_data(
+    index: int = Query(..., ge=1)
+) -> SearchOut:
+    try:
+        mydata = blockchain.get_data(index)
+        return {"data": mydata}
+    except Exception as e:
+        return {"error": str(e)}
 

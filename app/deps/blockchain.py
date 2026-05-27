@@ -20,7 +20,10 @@ class BlockChain:
         if index is None: 
             return None
         try:
-            return self.chain[index].data
+            for block in self.chain:
+                if block.index == index:
+                    return block.data
+            raise IndexError("block not found")
         except Exception as e:
             return {"error": str(e)}
             
