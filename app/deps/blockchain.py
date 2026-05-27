@@ -1,4 +1,4 @@
-from block import Block
+from app.deps.block import Block
 import json
 
 class BlockChain:
