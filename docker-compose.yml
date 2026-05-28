@@ -1,0 +1,32 @@
+services:
+  app1:
+    build:
+      context: .
+      no_cache: true
+    ports:
+      - "8545:8000"
+  app2:
+    build:
+      context: .
+      no_cache: true
+    ports:
+      - "8546:8000"
+  app3:
+    build:
+      context: .
+      no_cache: true
+    ports:
+      - "8547:8000"
+  app4:
+    build:
+      context: .
+      no_cache: true
+    ports:
+      - "8548:8000"
+
+  app5:
+    build:
+      context: .
+      no_cache: true
+    ports:
+      - "8549:8000"
