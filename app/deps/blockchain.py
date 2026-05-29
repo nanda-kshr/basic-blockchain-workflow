@@ -61,20 +61,31 @@ class BlockChain:
 
     def initalize(self):
         try:
-            with open("chain.json", "r") as blockchain_data_file:
-                blockchain_data = json.load(blockchain_data_file)
+            
+
             chain = []
-
-            for i in blockchain_data:
-                block = Block.from_json(i)
-                if not self.is_valid_block(block):
-                    break
-                chain.append(block)
+            try:
+                with open("chain.json", "r") as blockchain_data_file:
+                    blockchain_data = json.load(blockchain_data_file)
             
+                for i in blockchain_data:
+                    block = Block.from_json(i)
+                    if not self.is_valid_block(block):
+                        break
+                    chain.append(block)
+                    
+            except Exception as e:
+                print(e)
             
-            self.index = chain[-1].index if chain else 0
-            self.chain = chain if self.is_valid_chain(chain) else []
+            try: 
+                self.index = chain[-1].index if chain else 0
+                self.chain = chain if self.is_valid_chain(chain) else []
+            except Exception as e:
+                print(e)
+                self.chain = []
+                self.index = 0
 
+            
             longest_valid_chain = self.get_longest_peer_valid_chain()
 
             if len(longest_valid_chain) > len(self.chain):
@@ -84,6 +95,7 @@ class BlockChain:
                 print("BlockChain Synced with from peers.")
 
         except Exception as e:
+            print(e)
             print("File not found. Started a fresh BlockChain")
 
     def get_latest_block(self):
